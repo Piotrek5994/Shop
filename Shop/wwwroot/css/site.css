@@ -14,5 +14,20 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.body -content {
+    padding-bottom: 30px;
+}
+
+.image-container
+{
+    max-height: 200px;
+    height: 200px;
+}
+
+.img-fluid
+{
+    max-height: 100%;
 }
