@@ -3,7 +3,7 @@
     @{
     ViewData["Title"] = "Products";
     }
-    <h1>Products</h1>
+    <h1>All Products</h1>
     
     <div class="row">
         @foreach(var item in Model)
@@ -25,7 +25,7 @@
     @if(ViewBag.TotalPages>1)
     {
         <div class="d-flex w-100 justify-content-center">
-            <pagination page-count="ViewBag.TotalPages"
+            <pagination page-count="@ViewBag.TotalPages"
                     page-target="/products/@ViewBag.CategorySlug"
                     page-number="@ViewBag.PageNumber"
                     page-range="@ViewBag.PageRange"></pagination>
