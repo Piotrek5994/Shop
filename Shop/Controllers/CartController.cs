@@ -48,5 +48,60 @@ namespace Shop.Controllers
             TempData["Success"] = "Product added to cart successfully!";
             return Redirect(Request.Headers["Referer"].ToString());
         }
+        public async Task<IActionResult> Decrease(long id)
+        {
+
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart");
+
+            CartItem cartItem = cart.Where(x => x.ProductId == id).FirstOrDefault();
+
+            if (cartItem.Quantity > 1)
+            {
+                --cartItem.Quantity;
+
+            }
+            else
+            {
+                cart.RemoveAll(x=>x.ProductId==id);
+            }
+
+            if (cart.Count == 0)
+            {
+                HttpContext.Session.Remove("cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("cart", cart);
+            }
+
+            TempData["Success"] = "Product has been Removed";
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Remove(long id)
+        {
+
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart");
+
+            cart.RemoveAll(x => x.ProductId == id);
+
+            if (cart.Count == 0)
+            {
+                HttpContext.Session.Remove("cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("cart", cart);
+            }
+
+            TempData["Success"] = "Product has been Removed";
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Clear()
+        {
+            HttpContext.Session.Remove("cart");
+            return RedirectToAction("Index");
+        }
     }
 }
