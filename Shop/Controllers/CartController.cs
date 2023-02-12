@@ -24,5 +24,29 @@ namespace Shop.Controllers
             };
             return View(cartVM);
         }
+        public async Task<IActionResult> Add(long id)
+        {
+
+            Product product = await _context.Products.FindAsync(id);
+
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart") ?? new List<CartItem>();
+
+            CartItem cartItem = cart.Where(x => x.ProductId == id).FirstOrDefault();
+
+            if (cartItem == null)
+            {
+                cart.Add(new CartItem(product));
+
+            }
+            else
+            {
+                cartItem.Quantity++;
+            }
+
+            HttpContext.Session.SetJson("cart", cart);
+
+            TempData["Success"] = "Product added to cart successfully!";
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
     }
 }
