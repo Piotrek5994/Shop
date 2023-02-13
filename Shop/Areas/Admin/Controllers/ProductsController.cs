@@ -9,10 +9,12 @@ namespace Shop.Areas.Admin.Controllers
     {
 
         private readonly DataContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductsController(DataContext context)
+        public ProductsController(DataContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index(int p = 1)

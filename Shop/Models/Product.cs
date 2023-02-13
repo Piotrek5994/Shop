@@ -24,6 +24,10 @@ namespace Shop.Models
 
         public Category Category { get; set; }
         public string Image { get; set; }
+
+        [NotMapped]
+        [FileExtensions]
+        public IFormFile ImageUploud { get; set; }
     }
 }
 
