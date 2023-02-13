@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure;
 
@@ -27,6 +28,13 @@ namespace Shop.Areas.Admin.Controllers
                                                      .Include(p=>p.Category)
                                                      .Skip((p - 1) * pageSize)
                                                      .Take(pageSize).ToListAsync());
+        }
+
+        public IActionResult Create()
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+
+            return View();
         }
 
     }

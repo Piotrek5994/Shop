@@ -27,7 +27,7 @@ namespace Shop.Models
 
         [NotMapped]
         [FileExtensions]
-        public IFormFile ImageUploud { get; set; }
+        public IFormFile ImageUpload { get; set; }
     }
 }
 
