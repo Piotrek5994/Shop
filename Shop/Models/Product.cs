@@ -20,6 +20,7 @@ namespace Shop.Models
         [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
 
+        [Required, Range(1, int.MaxValue, ErrorMessage = "You must choose a Category")]
         public long CategoryId { get; set; }
 
         public Category Category { get; set; }
