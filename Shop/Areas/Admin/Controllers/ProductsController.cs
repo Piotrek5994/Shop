@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure;
+using Shop.Models;
 
 namespace Shop.Areas.Admin.Controllers
 {
@@ -35,6 +36,46 @@ namespace Shop.Areas.Admin.Controllers
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>Create(Product product)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id" , "Name",product.CategoryId);
+
+            if(ModelState.IsValid)
+            { 
+                product.Slug = product.Name.ToLower().Replace("","-");
+
+                var slug = await _context.Products.FirstOrDefaultAsync(x => x.Slug == product.Slug);
+                if(slug != null)
+                {
+                    ModelState.AddModelError("", "The Product already exist");
+                    return View(product);
+                }
+
+                
+                if(product.ImageUpload != null)
+                {
+                    string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
+                    string imageName = Guid.NewGuid().ToString()+"_"+ product.ImageUpload.FileName;
+
+                    string filePath = Path.Combine(uploadDir, imageName);
+
+                    FileStream fs = new FileStream(filePath, FileMode.Create);
+                    await product.ImageUpload.CopyToAsync(fs);
+                     fs.Close();
+
+                    product.Image = imageName;
+                }
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = "The product has been Created!";
+                return RedirectToAction ("Index");
+            }
+            return View(product);
         }
 
     }
