@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace Shop.Infrastructure.Components;
+
+namespace Shop.Infrastructure.Validation;
 
 public class FileExtensionAttribute : ValidationAttribute
 {
