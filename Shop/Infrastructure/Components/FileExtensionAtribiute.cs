@@ -1,24 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace Shop.Infrastructure.Components
+namespace Shop.Infrastructure.Components;
+
+public class FileExtensionAttribute : ValidationAttribute
 {
-    public class FileExtensionAtribiute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value , ValidationContext validationContext)
+        if (value is IFormFile file)
         {
-            if (value is IFormFile file)
+            var extension = Path.GetExtension(file.FileName);
+
+            string[] extensions = { "jpg", "png" };
+            bool result = extensions.Any(x => extension.EndsWith(x));
+
+            if (!result)
             {
-                 var extension = Path.GetExtension(file.FileName);
-
-                string[] extensions = { ".jpg", ".png", ".jpeg" };
-
-                bool result = extensions.Any(x =>extension.EndsWith(x));
-
-                if (!result)
-                {
-                    return new ValidationResult("Alloweg extension");
-                }
+                return new ValidationResult("Allowed extensions are jpg and png");
             }
-            return ValidationResult.Success;
         }
+
+        return ValidationResult.Success;
     }
 }
