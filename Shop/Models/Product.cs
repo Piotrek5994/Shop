@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Shop.Infrastructure.Validation;
 
 namespace Shop.Models
 {
@@ -27,7 +28,7 @@ namespace Shop.Models
         public string Image { get; set; } = "noimage.png";
 
         [NotMapped]
-        [FileExtensions]
+        [Chack]
         public IFormFile ImageUpload { get; set; }
     }
 }

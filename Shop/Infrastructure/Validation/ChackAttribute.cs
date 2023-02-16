@@ -2,7 +2,7 @@
 
 namespace Shop.Infrastructure.Validation;
 
-public class FileExtensionAttribute : ValidationAttribute
+public class ChackAttribute : ValidationAttribute
 {
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
