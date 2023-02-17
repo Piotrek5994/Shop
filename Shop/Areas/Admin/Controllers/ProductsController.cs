@@ -132,11 +132,21 @@ namespace Shop.Areas.Admin.Controllers
             return View(product);
         }
 
-        
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult>Delete(long id)
         {
             Product product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+
+           if(!string.Equals(product.Image,"noimage.png"))
+            {
+                string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
+                string oldImg = Path.Combine(uploadDir, product.Image);
+                if (System.IO.File.Exists(oldImg))
+                {
+                    System.IO.File.Delete(oldImg);
+                }
+            }
+
+           _context.Remove(product);
             await _context.SaveChangesAsync();
 
             TempData["Success"] = "The product has been deleted!";
