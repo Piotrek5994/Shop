@@ -16,7 +16,7 @@ namespace Shop.Controllers
 
         public IActionResult Index()
         {
-            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart") ?? new List<CartItem>();
 
             CartViewModel cartVM = new()
             {
@@ -31,7 +31,7 @@ namespace Shop.Controllers
         {
             Product product = await _context.Products.FindAsync(id);
 
-            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart") ?? new List<CartItem>();
 
             CartItem cartItem = cart.Where(c => c.ProductId == id).FirstOrDefault();
 
@@ -44,7 +44,7 @@ namespace Shop.Controllers
                 cartItem.Quantity += 1;
             }
 
-            HttpContext.Session.SetJson("Cart", cart);
+            HttpContext.Session.SetJson("cart", cart);
 
             TempData["Success"] = "The product has been added!";
 
@@ -53,7 +53,7 @@ namespace Shop.Controllers
 
         public async Task<IActionResult> Decrease(long id)
         {
-            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart");
 
             CartItem cartItem = cart.Where(c => c.ProductId == id).FirstOrDefault();
 
@@ -68,11 +68,11 @@ namespace Shop.Controllers
 
             if (cart.Count == 0)
             {
-                HttpContext.Session.Remove("Cart");
+                HttpContext.Session.Remove("cart");
             }
             else
             {
-                HttpContext.Session.SetJson("Cart", cart);
+                HttpContext.Session.SetJson("cart", cart);
             }
 
             TempData["Success"] = "The product has been removed!";
@@ -82,17 +82,17 @@ namespace Shop.Controllers
 
         public async Task<IActionResult> Remove(long id)
         {
-            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("cart");
 
             cart.RemoveAll(p => p.ProductId == id);
 
             if (cart.Count == 0)
             {
-                HttpContext.Session.Remove("Cart");
+                HttpContext.Session.Remove("cart");
             }
             else
             {
-                HttpContext.Session.SetJson("Cart", cart);
+                HttpContext.Session.SetJson("cart", cart);
             }
 
             TempData["Success"] = "The product has been removed!";
@@ -102,7 +102,7 @@ namespace Shop.Controllers
 
         public IActionResult Clear()
         {
-            HttpContext.Session.Remove("Cart");
+            HttpContext.Session.Remove("cart");
 
             return RedirectToAction("Index");
         }
