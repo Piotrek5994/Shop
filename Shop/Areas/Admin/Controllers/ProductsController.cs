@@ -8,6 +8,7 @@ using Shop.Models;
 namespace Shop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly DataContext _context;
