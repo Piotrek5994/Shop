@@ -20,11 +20,15 @@
                 <td>@item.ProductName</td>
                 <td>@item.Quantity</td>
                 <td>
-                    <a class="button-84" asp-action="Add" asp-route-id="@item.ProductId">+</a>
-                    <a class="button-84" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
+                    <a class="button-84" asp-action="Add" asp-route-id="@item.ProductId">
+                        <i class="gg-math-plus"></i>
+                    </a>
+                    <a class="button-84" asp-action="Decrease" asp-route-id="@item.ProductId">
+                        <i class="gg-math-minus"></i>
+                    </a>
                     <a class="button-84" asp-action="Remove" asp-route-id="@item.ProductId">
                         <i class="gg-trash"></i>
-                        </a>
+                    </a>
                 </td>
                 <td>@item.Price.ToString("C2")</td>
                 <td>@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
@@ -35,8 +39,8 @@
         </tr>
         <tr>
             <td class="text-right" colspan="4">
-                <a class="btn btn-light" asp-action="Clear">Clear Cart</a>
-                <a class="btn btn-primary" href="#">Checkout</a>
+                <a class="btn btn-outline-light" asp-action="Clear">Clear Cart</a>
+                <a class="btn btn-outline-light" asp-controller="Products">Back</a>
             </td>
         </tr>
     </table>
