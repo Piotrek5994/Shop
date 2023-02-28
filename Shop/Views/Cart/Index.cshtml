@@ -22,7 +22,9 @@
                 <td>
                     <a class="button-84" asp-action="Add" asp-route-id="@item.ProductId">+</a>
                     <a class="button-84" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
-                    <a class="button-84" asp-action="Remove" asp-route-id="@item.ProductId">Remove</a>
+                    <a class="button-84" asp-action="Remove" asp-route-id="@item.ProductId">
+                        <i class="gg-trash"></i>
+                        </a>
                 </td>
                 <td>@item.Price.ToString("C2")</td>
                 <td>@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
