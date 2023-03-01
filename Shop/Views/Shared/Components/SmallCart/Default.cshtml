@@ -2,10 +2,10 @@
 
 @if(Model != null)
 {
-    <p>Items is cart: <span class="btn btn-group-vertical">@Model.NumberOfitems</span></p>
+    <p><i class="bi bi-cart4"></i><span class="btn btn-group-vertical">@Model.NumberOfitems</span></p>
     <p>Total: <b>@Model.TotalAmount.ToString("C2")</b></p>
-    <a  class="btn btn-primary" asp-controller="Cart" asp-action="Index">View Cart</a>
-    <a  class="btn btn-danger" asp-controller="Cart" asp-action="Clear">Clear Cart</a>
+    <a class="button-84" asp-controller="Cart" asp-action="Index">View</a>
+    <a class="button-84" asp-controller="Cart" asp-action="Clear">Clear</a>
 }
 else
 {
